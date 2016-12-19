@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 
 class SignupForm(forms.Form):
     username = forms.CharField(
@@ -62,16 +63,14 @@ class SignupForm(forms.Form):
 class SigninForm(forms.Form):
     login = forms.CharField(
         widget=forms.TextInput(
-            attrs={'class': 'form-control', 'placeholder': 'me', }
+            attrs={'class': 'form-control', 'placeholder': 'Email', }
         ),
         max_length=30,
-        label='Login'
     )
     password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder': '*******', }
+            attrs={'class': 'form-control', 'placeholder': 'Password', }
         ),
-        label='Passsword'
     )
 
     def clean(self):

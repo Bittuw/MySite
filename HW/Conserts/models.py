@@ -13,7 +13,7 @@ class Consert(models.Model):
 	reservation = models.ManyToManyField(User)
 
 	def __str__(self):
-		return "Consert: {} {} {}".format(self.name, self.theatre, self.time)
+		return "Consert: {} {} {} {}".format(self.name, self.theatre, self.time, self.description)
 
 @admin.register(Consert)
 class ConsertAdmin(admin.ModelAdmin):
