@@ -1,0 +1,65 @@
+{% extends 'sign.html' %}
+
+{% block title %}
+	Sign up
+{% endblock %}
+
+{% block form %}
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Sign up</h4>
+        </div>
+
+        <div class="modal-body">
+
+        	    <div class="clearfix">
+        		{% for e in form.non_field_errors %}
+
+            	<div class="form-error">
+                	<div class="alert alert-danger" role="alert">
+                    	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                	{{ e }}
+                	</div>
+            	</div>
+
+        		{% endfor %}
+
+        		<div class="signup-form">
+            		<form class="form-horizontal" method="post" action="">
+
+                	{% csrf_token %}
+                	{% for field in form %}
+
+                    	<div class="clearfix form-group{% if field.errors %} has-error{% endif %}">
+                        	<label for="login" class="col-sm-3 control-label">{{ field.label }}</label>
+                        	<div class="col-sm-6">
+                            	{{ field }}
+                            	{% if field.errors %} {% for e in field.errors %}{{ e }}{% endfor %}
+                            	{% endif %}
+                        	</div>
+                    	</div>
+
+                	{% endfor %}
+
+                		<div class="form-group">
+                    		<div class="col-sm-offset-3 col-sm-6">
+                        		<button type="submit" class="btn btn-success">Sign up!</button>
+                    		</div>
+                		</div>
+            		</form>
+        		</div>
+    		</div>
+         </div>
+          
+
+
+        <div class="modal-footer">
+          <a class="btn btn-default" href="{{ redirect }}">Назад</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

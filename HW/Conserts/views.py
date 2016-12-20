@@ -4,25 +4,54 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib import auth
 
-from Conserts.forms import SigninForm
+from Conserts.forms import SigninForm, SignupForm
+
+def main(request):
+	return render(request, 'main.html')
 
 
-def singin(request):
-	redirect = request.GET.get('continue', '/success')
+def signin(request):
+	redirect = request.GET.get('continue', 'main')
+
+	if request.user.is_authenticated:
+		return HttpResponseRedirect(redirect)
+
 	if request.method == "POST":
 		form = SigninForm(request.POST)
 
 		if form.is_valid():
 			auth.login(request, form.cleaned_data['user'])
-			return HttpResponseRedirect('singup')
+			return HttpResponseRedirect(redirect)
 	else:
 		form = SigninForm()
-	return render(request, 'index.html', {
-        'form': form
+	return render(request, 'signin.html', {
+        'form': form,
+        'redirect' : redirect,
     })
 
-def main(request):
-	return HttpResponse('singup/')
 
-def singup(request):
-	return HttpResponse('singup/')
+def signup(request):
+	redirect = request.GET.get('continue', '/')
+	if request.user.is_authenticated():
+		return HttpResponseRedirect(redirect)
+
+	if request.method == "POST":
+		form = SignupForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			auth.login(request, user)
+			return HttpResponseRedirect(redirect)
+	else:
+		form = SignupForm()
+
+	return render(request, 'signup.html', {
+        'form': form,
+        'redirect': redirect,
+	})
+
+
+def logout(request):
+    redirect = request.GET.get('continue', '/')
+    auth.logout(request)
+    return HttpResponseRedirect(redirect)
+
