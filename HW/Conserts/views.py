@@ -31,7 +31,7 @@ def signin(request):
 
 
 def signup(request):
-	redirect = request.GET.get('continue', '/')
+	redirect = request.GET.get('continue', 'main')
 	if request.user.is_authenticated():
 		return HttpResponseRedirect(redirect)
 

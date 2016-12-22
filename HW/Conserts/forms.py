@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 class SignupForm(forms.Form):
@@ -30,7 +32,7 @@ class SignupForm(forms.Form):
     def clean_username(self):
         username = self.cleaned_data.get('username', '')
 
-        try:
+        try:    
             u = User.objects.get(username=username)
             raise forms.ValidationError('Such user already exists')
         except User.DoesNotExist:
