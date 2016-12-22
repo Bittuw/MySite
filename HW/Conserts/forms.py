@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 
 class SignupForm(forms.Form):
     username = forms.CharField(
-        widget = forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'me', }),
+        widget = forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Username', }),
         max_length = 30, min_length = 5, required = True, label='Login'
     )
     first_name = forms.CharField(
@@ -65,7 +65,7 @@ class SignupForm(forms.Form):
 class SigninForm(forms.Form):
     login = forms.CharField(
         widget=forms.TextInput(
-            attrs={'class': 'form-control', 'placeholder': 'Email', }
+            attrs={'class': 'form-control', 'placeholder': 'Username', }
         ),
         max_length=30,
     )

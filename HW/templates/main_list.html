@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+{% block title %}
+	main_list
+{% endblock %}
+
+{% block content %}
+<div class="container jumbotron">
+    <ul class="media-list">
+        {% for consert in Conserts %}
+        <li class="media">
+        	<div class="media-left">
+        		<a href="#">
+        			<img src="{{ consert.image.url }}" class="media-object my-img img-thumbnail"/>
+        		</a>
+        	</div>
+
+        	<div class="media-body">
+        		<h4 class="media-heading">{{ consert.name }}, time: {{ consert.time }}</h4>
+        		<h5 class="media-heading">{{ consert.theatre }}</h5>
+        		<p>{{ consert.description }}</p>
+        		<p><a href="#">learn more</a></p>
+        	</div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+ {% endblock %}

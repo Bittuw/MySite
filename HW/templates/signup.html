@@ -14,43 +14,33 @@
         </div>
 
         <div class="modal-body">
+            <div class="clearfix">
 
-        	    <div class="clearfix">
-        		{% for e in form.non_field_errors %}
 
-            	<div class="form-error">
-                	<div class="alert alert-danger" role="alert">
-                    	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                	{{ e }}
-                	</div>
-            	</div>
+        	   <div class="signup-form">
+            	   <form class="form-horizontal" method="post" action="">
 
-        		{% endfor %}
+                    {% csrf_token %}
 
-        		<div class="signup-form">
-            		<form class="form-horizontal" method="post" action="">
+                    {% for field in form %}
+                        <div class="clearfix form-group{% if field.errors %} has-error{% endif %}">
+                            <label for="login" class="col-sm-3 control-label">{{ field.label }}</label>
+                            <div class="col-sm-6">
+                                {{ field }}
+                                {% if field.errors %} {% for e in field.errors %}{{ e }}{% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
 
-                	{% csrf_token %}
-                	{% for field in form %}
+                	   <div class="form-group">
+                    	   <div class="col-sm-offset-3 col-sm-6">
+                        	   <button type="submit" class="btn btn-success">Sign up!</button>
+                    	   </div>
+                	   </div>
+            	   </form>
+                </div>
 
-                    	<div class="clearfix form-group{% if field.errors %} has-error{% endif %}">
-                        	<label for="login" class="col-sm-3 control-label">{{ field.label }}</label>
-                        	<div class="col-sm-6">
-                            	{{ field }}
-                            	{% if field.errors %} {% for e in field.errors %}{{ e }}{% endfor %}
-                            	{% endif %}
-                        	</div>
-                    	</div>
-
-                	{% endfor %}
-
-                		<div class="form-group">
-                    		<div class="col-sm-offset-3 col-sm-6">
-                        		<button type="submit" class="btn btn-success">Sign up!</button>
-                    		</div>
-                		</div>
-            		</form>
-        		</div>
     		</div>
          </div>
           
