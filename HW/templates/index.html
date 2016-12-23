@@ -8,17 +8,20 @@
     <meta name="author" content="...">
 
     {% load static %}
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/my-css.css' %}">
 
     <title>{% block title %}{% endblock %}</title>
 
+
   </head>
   <body>
 
 
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top clearfix">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
@@ -27,9 +30,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="main_list">Conserts</a>
+          <a class="navbar-brand" href="{% url 'main_list' page_id=0 %}">Conserts</a>
+          
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="">
+              {% block create%}
+              {% endblock %}
+            </li>
+          </ul>
           
           <form class="navbar-form navbar-right" method="post">
 
@@ -59,10 +69,10 @@
       </div>
     </nav>
 
-
+    <div style="height:50px;" class="cleafix"></div>
     {% block content %}
 
-    <div class="jumbotron">
+    <div class="jumbotron clearfix">
       <div class="container">
         <h1 class="text-center">Привет, мой друг!</h1>
         <p class="text-center">Этот сайт является первым моим полноценным сайтой. Не судите строго :)</p>
@@ -75,12 +85,12 @@
 
     <footer class="footer navbar-fixed-bottom">
       <div class="container"> 
-        <p class="text-muted">&copy; BMSTU 2016, Дмитриев Никита ИУ5-53</p>
+        <p class="text-muted text-right">&copy; BMSTU 2016, Дмитриев Никита ИУ5-53</p>
       </div>
     </footer>
 
-
-    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    
+    {% block scripts %}
+    {% endblock %}
   </body>
 </html>

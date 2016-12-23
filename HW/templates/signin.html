@@ -15,32 +15,27 @@
         <div class="modal-body">
 
           <div class="clearfix">
-            <div class="signin-form-error">
-              {% for e in form.non_field_errors %}
-                  <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    {{ e }}
-                  </div>
-              {% endfor %}
-          </div>
+
+            <div class="signin-form-error" id="errors">
+            </div>
 
           <div class="signin-form clearfix">
-            <form class="form-horizontal" method="post" action="">
+            <form class="form-horizontal" method="post" action="" id="signin">
                 {% csrf_token %}
+                
+                {% for field in form %}
                 <div class="form-group clearfix">
-                  <label for="login" class="col-sm-2 control-label">{{ form.login.label }}</label>
-                  <div class="col-sm-5"> {{ form.login }} </div>
+                  <label for="login" class="col-sm-2 control-label">{{ field.label }}</label>
+                  <div class="col-sm-5"> {{ field }} </div>
                 </div>
-                <div class="form-group clearfix">
-                  <label for="password" class="col-sm-2 control-label">{{ form.password.label }}</label>
-                  <div class="col-sm-5"> {{ form.password }} </div>
-                </div>
+                {% endfor %}
+
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-2">
                     <button type="submit" class="btn btn-success">Sign in</button>
                   </div>
                   <div class="col-sm-5">
-                      <a href="{% url 'signup' %}" class="btn btn-success" style="float: right">Sign up</a>
+                      <a href="{% url 'signup' %}?continue={{ request.path }}" class="btn btn-success" style="float: right">Sign up</a>
                   </div>
                 </div>
               </form>
@@ -55,4 +50,6 @@
       </div>
     </div>
   </div>
+  {% load static %}
+  <script src="{% static 'js/my-js.js '%}"></script>
 {% endblock %}

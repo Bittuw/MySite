@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% block title %}
-	main_list
+    main_list
 {% endblock %}
 
 {% block content %}
@@ -9,20 +9,66 @@
     <ul class="media-list">
         {% for consert in Conserts %}
         <li class="media">
-        	<div class="media-left">
-        		<a href="#">
-        			<img src="{{ consert.image.url }}" class="media-object my-img img-thumbnail"/>
-        		</a>
-        	</div>
+            <div class="media-left">
+                <a href="{% url 'consert' pk=consert.id %}">
+                    <img src="{{ consert.image.url }}" class="media-object my-img img-thumbnail"/>
+                </a>
+            </div>
 
-        	<div class="media-body">
-        		<h4 class="media-heading">{{ consert.name }}, time: {{ consert.time }}</h4>
-        		<h5 class="media-heading">{{ consert.theatre }}</h5>
-        		<p>{{ consert.description }}</p>
-        		<p><a href="#">learn more</a></p>
-        	</div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ consert.name }}, time: {{ consert.time }}</h4>
+                <h5 class="media-heading">{{ consert.theatre }}</h5>
+                <p>{{ consert.description }}</p>
+                <p><a href="{% url 'consert' pk=consert.id %}">learn more</a></p>
+            </div>
         </li>
+        {% empty %}
+        N/A
         {% endfor %}
     </ul>
 </div>
+
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Create consert</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="clearfix">
+
+            <div class="signin-form-error" id="errors">
+            </div>
+
+          <div class="signin-form clearfix">
+            <form class="form-horizontal" method="post" action="" id="signin" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <div class="form-group clearfix">
+                  <label for="login" class="col-sm-2 control-label">{{ field.label }}</label>
+                  <div class="col-sm-5"> {{ field }} </div>
+                </div>
+                {% endfor %}
+
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-2">
+                    <button type="submit" class="btn btn-success">Create consert</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
  {% endblock %}
+
+{% block scripts %}
+    {% load static %}
+   <script src="{% static 'js/my-js-3.js' %}"></script>
+{% endblock %}
+
+{% block create %}
+    <a href="#" data-toggle="modal" data-target="#myModal">Create consert</a>
+{% endblock %}

@@ -18,7 +18,7 @@
 
 
         	   <div class="signup-form">
-            	   <form class="form-horizontal" method="post" action="">
+            	   <form class="form-horizontal" method="post" action="" id="signup">
 
                     {% csrf_token %}
 
@@ -47,9 +47,11 @@
 
 
         <div class="modal-footer">
-          <a class="btn btn-default" href="{{ redirect }}">Назад</a>
+          <a class="btn btn-default" href="{{ redirect }}?continue=main">Назад</a>
         </div>
       </div>
     </div>
   </div>
+  {% load static %}
+   <script src="{% static 'js/my-js-2.js' %}"></script>
 {% endblock %}

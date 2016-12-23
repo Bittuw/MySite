@@ -1,0 +1,9 @@
+
+  {% for e in form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        {{ e }}
+      </div>
+  {% empty %}
+  N/A
+  {% endfor %}

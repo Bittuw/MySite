@@ -1,0 +1,37 @@
+{% extends "index.html" %}
+
+{% block title %}
+	{{ Consert.name }} 
+{% endblock %}
+
+{% block content %}
+<div class="container jumbotron">
+    <ul class="media-list">
+        <li class="media">
+            <div class="media-left">
+                <img src="{{ consert.image.url }}" class="media-object my-img img-thumbnail"/>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{ consert.name }}, time: {{ consert.time }}</h4>
+                <h5 class="media-heading">{{ consert.theatre }}</h5>
+                <p>{{ consert.description }}</p>
+            </div>
+            
+            <div class="media-right">
+	            <!-- <div class="container"> -->
+		            {% csrf_token %}
+		            {% include 'users.html' %}
+		            <div status-val="{{ status }}" id="user_status">Accepted</div>
+		            <button type="submit" class="btn btn-success" id="change_status_button">Reservation</button>
+	            <!-- </div> -->
+            </div>
+        </li>
+    </ul>
+    
+</div>
+ {% endblock %}
+
+{% block scripts %}
+{% load static %}
+<script src="{% static 'js/my-js-4.js '%}"></script>
+{% endblock %}

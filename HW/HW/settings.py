@@ -126,4 +126,4 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Files', 'Images')
 MEDIA_URL = '/Images/'
 
-LOGIN_URL = '/singin/'
+LOGIN_URL = '/signin/'

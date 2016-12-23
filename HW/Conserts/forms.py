@@ -1,4 +1,5 @@
 from django import forms
+from .models import  Consert
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -86,3 +87,39 @@ class SigninForm(forms.Form):
                 raise forms.ValidationError('The user is not active')
         else:
             raise forms.ValidationError('Wrong username or password')
+
+
+class ConsertForm(forms.Form):
+    name = forms.CharField(
+        widget = forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Name', }),
+        max_length = 30, min_length = 5, required = True, label='Name'
+    )
+    theatre = forms.CharField(
+        widget=forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Theatre', }),
+        max_length = 30, required=True, label='Theatre'
+    )
+    description = forms.CharField(
+        widget=forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Description', }),
+        max_length=30, required=True, label='Description'
+    )
+    time = forms.DateTimeField(
+        widget=forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Time', }),
+        required=True, label='Time',
+        input_formats=[
+            '%Y-%m-%d %H:%M:%S',
+            '%Y-%m-%d %H:%M',
+        ]
+    )
+    image = forms.ImageField(
+        widget=forms.ClearableFileInput(attrs = {'class': 'form-control',  }),
+        required=False, label='Image'
+    )
+
+    def fill_object(self):
+        return Consert.objects.create(
+            name=self.cleaned_data['name'],
+            theatre=self.cleaned_data['theatre'],
+            description=self.cleaned_data['description'],
+            time=self.cleaned_data['time']
+        )
+    
