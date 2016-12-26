@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import configparser
+
+config = configparser.ConfigParser()
+with open(os.path.join(os.getcwd(),'HW', 'config.cfg'), 'r') as config_file:
+    config.readfp(config_file)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,9 +82,9 @@ WSGI_APPLICATION = 'HW.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'HW',
-        'USER': 'root',
-        'PASSWORD': 'elitaass18',
+        'NAME': config.get('D', 'NAME'),
+        'USER': config.get('D', 'USER'),
+        'PASSWORD': config.get('D', 'PASSWORD')
     }
 }
 
