@@ -74,3 +74,19 @@ infinityList.init = function(){
 $(document).ready(function () {
     infinityList.init();
 })
+
+$('form').submit(function(event) {
+    $('#error-time').remove()
+    event.preventDefault();
+    var reg = /(\d{4})-([0-9]|1[0-2])-([\d]|[1-2][\d]|3[0-1]) ([\d]|[1-2][\d]|2[0-4]):([\d]|[1-5][\d]):([\d{2}|[1-5][\d])/
+    var date = $('#id_time').val();
+
+    if(date.match(reg)) {
+        $(this).unbind('submit').submit()
+    }
+    else {
+        $('#id_time').parent().addClass('has-error');
+        $('#id_time').after('<div id="error-time">Not Valid time</div>')
+    }
+  
+})

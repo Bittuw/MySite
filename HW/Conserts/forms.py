@@ -96,11 +96,11 @@ class ConsertForm(forms.Form):
     )
     theatre = forms.CharField(
         widget=forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Theatre', }),
-        max_length = 30, required=True, label='Theatre'
+        max_length = 40, min_length = 20,  required=True, label='Theatre'
     )
     description = forms.CharField(
         widget=forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Description', }),
-        max_length=30, required=True, label='Description'
+        max_length=100, min_length = 20,  required=True, label='Description'
     )
     time = forms.DateTimeField(
         widget=forms.TextInput(attrs = {'class': 'form-control', 'placeholder': 'Time', }),
