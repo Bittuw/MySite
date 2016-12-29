@@ -36,7 +36,7 @@ def signin(request):
         form = SigninForm()
     return render(request, 'signin.html', {
         'form': form,
-        'redirect' : redirect,
+        'redirect': redirect,
     })
 
 
@@ -72,7 +72,6 @@ class MainList(ListView):
     context_object_name = "Conserts"
     template_name = "main_list.html"
 
-
     def get(self, request, page_id):
 
         objects_on_list = 3
@@ -91,25 +90,26 @@ class MainList(ListView):
         context['form'] = ConsertForm()
         return context
 
-
     def post(self, request, page_id):
         form = ConsertForm(request.POST, request.FILES)
 
         if not form.is_valid():
             return JsonResponse(form.errors)
-        
-        consert = form.fill_object()
 
+        consert = form.fill_object()
         f = request.FILES.get('image')
 
         if f is not None:
             img_url = r'image/%s.jpg' % (consert.id)
-            FileSystemStorage().save(os.path.join(settings.MEDIA_ROOT, img_url), File(f))
+            FileSystemStorage().save(
+                os.path.join(
+                    settings.MEDIA_ROOT,
+                    img_url),
+                File(f)
+                )
             consert.image = img_url
             consert.save()
-
-        return HttpResponseRedirect('consert/%d' %(consert.id,))
-
+        return HttpResponseRedirect('consert/%d' % (consert.id,))
 
 
 class ConsertView(DetailView):
@@ -117,17 +117,17 @@ class ConsertView(DetailView):
     template_name = "consert_detail.html"
     context_object_name = "consert"
 
-
     @method_decorator(login_required)
     def get(self, request, pk):
         cur_consert = Consert.objects.get(id=int(pk))
         return render(
-            request, 
-            'consert_detail.html', 
+            request,
+            'consert_detail.html',
             {
-                'consert': cur_consert, 
+                'consert': cur_consert,
                 'reservation': cur_consert.reservation.all(),
-                'status': cur_consert.reservation.filter(id=request.user.id).exists(),
+                'status': cur_consert.reservation.filter(
+                    id=request.user.id).exists(),
             }
         )
         # return DetailView.get(self, request)
@@ -143,4 +143,7 @@ class ConsertView(DetailView):
         if state == 'False' and is_reservated:
             cur_consert.reservation.remove(user)
 
-        return render(request, 'users.html', { 'consert': cur_consert, 'reservation': cur_consert.reservation.all()})
+        return render(request, 'users.html', {
+            'consert': cur_consert,
+            'reservation': cur_consert.reservation.all()
+            })
