@@ -76,17 +76,55 @@ $(document).ready(function () {
 })
 
 $('form').submit(function(event) {
-    $('#error-time').remove()
-    event.preventDefault();
-    var reg = /(\d{4})-([0-9]|1[0-2])-([\d]|[1-2][\d]|3[0-1]) ([\d]|[1-2][\d]|2[0-4]):([\d]|[1-5][\d]):([\d{2}|[1-5][\d])/
-    var date = $('#id_time').val();
 
+    event.preventDefault();
+
+    var arr = $('.has-error');
+    for (var i = 0;i < arr.length; i++) {
+        var elem = arr.get(i);
+        $(elem).removeClass('has-error');
+        $(elem).children('div').remove();
+    }
+   
+    var reg = /(\d{4})-([0-9]|1[0-2])-([\d]|[1-2][\d]|3[0-1]) ([\d]|[1-2][\d]|2[0-4]):([\d]|[1-5][\d]):([\d{2}|[1-5][\d])/;
+    var date = $('#id_time').val();
+    var name = $('#id_name').val();
+    var theatre = $('#id_theatre').val();
+    var description = $('#id_description').val();
+
+    if (!(name.length < 5 || name.length > 30)) {
+        name = true;
+    }
+    else {
+        $('#id_name').parent().addClass('has-error');
+        $('#id_name').after('<div id="error-name">Not Valid name</div>');
+        name = false;
+    }
+    if (!(theatre.length < 20 || theatre.length > 40)) {
+       theatre = true;
+    }   
+    else {
+        $('#id_theatre').parent().addClass('has-error');
+        $('#id_theatre').after('<div id="error-theat">Not Valid theatre</div>');
+        theatre = false;
+    }
+    if (!(description.length < 20 || description.length > 100)) {
+        description = true;
+    }
+    else {
+        $('#id_description').parent().addClass('has-error');
+        $('#id_description').after('<div id="error-desc">Not Valid description</div>');
+        description = false;
+    }
     if(date.match(reg)) {
-        $(this).unbind('submit').submit()
+        date = true;
     }
     else {
         $('#id_time').parent().addClass('has-error');
-        $('#id_time').after('<div id="error-time">Not Valid time</div>')
+        $('#id_time').after('<div id="error-time">Not Valid time</div>');
+        date = false;
     }
-  
+    if (name && date && theatre && description) {
+        $(this).unbind('submit').submit();
+    }
 })
