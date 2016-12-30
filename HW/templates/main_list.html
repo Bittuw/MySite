@@ -18,7 +18,7 @@
             <div class="media-body">
                 <h4 class="media-heading">{{ consert.name }}, time: {{ consert.time }}</h4>
                 <h5 class="media-heading">{{ consert.theatre }}</h5>
-                <p>{{ consert.description }}</p>
+                <div class="text-transfer"><p>{{ consert.description }}</p></div>
                 <p><a href="{% url 'consert' pk=consert.id %}">learn more</a></p>
             </div>
         </li>
